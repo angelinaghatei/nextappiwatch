@@ -10,16 +10,19 @@ const CookieConsentPopup = () => {
   if (!visible) return null;
 
   return (
-    <section className="cookie-consent-popup">
-      <header className="cookie-consent-popup-header">
+    <section className="flex flex-col justify-between p-6 text-white bg-black w-72 h-80 rounded-3xl">
+      <header className="flex justify-between">
         <LiaCookieBiteSolid size={50} />
-        <IoIosClose className="pointer" size={25} onClick={() => setVisible(false)} />
+        <IoIosClose className="cursor-pointer" size={25} onClick={() => setVisible(false)} />
       </header>
-      <footer className="cookie-consent-popup-footer">
-        <p className="cookie-consent-popup-paragraph">
+      <footer className="flex flex-col">
+        <p className="leading-8 text-[25px] mb-4">
           We use cookies to improve your user experience!
         </p>
-        <button className="cookie-consent-popup-cta pointer" onClick={() => setVisible(false)}>
+        <button
+          className="p-3 text-lg text-black bg-slate-50 rounded-lg h-15 cursor-pointer"
+          onClick={() => setVisible(false)}
+        >
           I like Cookies
         </button>
       </footer>
