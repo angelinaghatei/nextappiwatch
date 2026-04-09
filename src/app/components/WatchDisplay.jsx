@@ -1,54 +1,69 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 
-const watches = [
+export const watches = [
   {
     id: "navy",
+    color: "#3d4a6b",
     bg: "rgba(80, 90, 115, 0.55)",
     label: "Midnight Navy",
-    imageSrc: "/watches/thumb-navy.png",
-    thumbSrc: "/watches/thumb-navy.png",
+    imageSrc: "/watches/blackwatch.webp",
   },
   {
     id: "teal",
+    color: "#4ecdc4",
     bg: "rgba(78, 205, 196, 0.55)",
     label: "Sea Green",
-    imageSrc: "/watches/watch-teal.png",
-    thumbSrc: "/watches/watch-teal.png",
+    imageSrc: "/watches/bluewatch.webp",
   },
   {
     id: "rose",
+    color: "#f4b8a8",
     bg: "rgba(244, 184, 168, 0.55)",
     label: "Rose Gold",
-    imageSrc: "/watches/watch-rose.png",
-    thumbSrc: "/watches/watch-rose.png",
+    imageSrc: "/watches/pinkwatch.webp",
   },
 ];
 
-export default function WatchDisplay() {
-  const [selected] = useState(watches[0]);
+export default function WatchDisplay({ selectedId, onColorChange }) {
+  const selected = watches.find((w) => w.id === selectedId) ?? watches[0];
 
   return (
     <div className="flex flex-col items-center gap-6 w-full">
-      {/* Main watch image */}
+      {/* Hovedbillede */}
       <div className="relative w-80 h-80 flex items-center justify-center">
-        <Image src={selected.imageSrc} alt={selected.label} width={320} height={320} className="object-contain drop-shadow-2xl" priority />
+        <Image
+          src={selected.imageSrc}
+          alt={selected.label}
+          width={320}
+          height={320}
+          className="object-contain drop-shadow-2xl"
+          priority
+        />
       </div>
 
-      {/* Thumbnail row */}
+      {/* Thumbnails */}
       <div className="flex gap-6 items-center">
         {watches.map((watch) => (
-          <div key={watch.id} style={{ width: "140px", height: "90px" }} className="relative flex items-center justify-center">
-            {watch.id === "navy" ? (
-              <>
-                <div className="absolute inset-1 rounded-2xl" style={{ backgroundColor: "#6b7280" }} />
-                <Image src={watch.thumbSrc} alt={watch.label} width={80} height={80} className="object-contain relative z-10 mt-1" />
-              </>
-            ) : (
-              <Image src={watch.thumbSrc} alt={watch.label} width={140} height={100} className="object-contain" />
-            )}
+          <div
+            key={watch.id}
+            onClick={() => onColorChange?.(watch)}
+            style={{
+              width: "140px",
+              height: "100px",
+              backgroundColor: watch.bg,
+              outline: selectedId === watch.id ? "3px solid white" : "none",
+            }}
+            className="relative flex items-center justify-center rounded-2xl overflow-hidden cursor-pointer"
+          >
+            <Image
+              src={watch.imageSrc}
+              alt={watch.label}
+              width={110}
+              height={90}
+              className="object-contain"
+            />
           </div>
         ))}
       </div>
